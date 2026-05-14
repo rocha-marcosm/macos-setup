@@ -1,0 +1,31 @@
+# AWS MFA Login Helper
+aws-mfa-login() {
+  local profile="${1:-<some_profile>}"
+  local mfa_serial="arn:aws:iam:::<account_number>:mfa/<mfa_id>"
+  
+  echo -n "Enter MFA code for ${profile}: "
+  read mfa_code
+  
+  echo "Authenticating..."
+  local output=$(aws sts get-session-token \
+    --serial-number "$mfa_serial" \
+    --token-code "$mfa_code" \
+    --profile "$profile" \
+    --duration-seconds 43200 \
+    --output json 2>&1)
+  
+  if [ $? -eq 0 ]; then
+    export AWS_ACCESS_KEY_ID=$(echo "$output" | jq -r '.Credentials.AccessKeyId')
+    export AWS_SECRET_ACCESS_KEY=$(echo "$output" | jq -r '.Credentials.SecretAccessKey')
+    export AWS_SESSION_TOKEN=$(echo "$output" | jq -r '.Credentials.SessionToken')
+    local expiration=$(echo "$output" | jq -r '.Credentials.Expiration')
+    
+    echo "✅ MFA session activated! Expires at: ${expiration}"
+    echo ""
+    aws sts get-caller-identity
+  else
+    echo "❌ Failed to authenticate"
+    echo "$output"
+    return 1
+  fi
+}
