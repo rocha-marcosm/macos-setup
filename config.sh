@@ -22,7 +22,7 @@ if command -v brew &> /dev/null; then
     echo "✅ Homebrew already installed."
 else
     echo "🍺 Installing Homebrew..."
-    NONINTERACTIVE=1 /bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   /bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
 # 3. Setup Shell Path for Apple Silicon
@@ -51,7 +51,7 @@ fi
 
 echo "🐧 Installing Oh My Zsh..."
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 echo "🚀 Installing spaceship zsh theme..."
