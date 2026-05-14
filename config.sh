@@ -1,10 +1,11 @@
 #!/usr/bin/env zsh
 
 set -eo pipefail
+trap 'echo "❌ Error on line $LINENO"' ERR
 
 # Ask for confirmation
 confirm() {
-    read -p "$1 (y/n): " -n 1 -r
+    read -r "REPLY?$1 (y/n): "
     echo
     [[ $REPLY =~ ^[Yy]$ ]]
 }
@@ -29,7 +30,7 @@ fi
 echo "Ensuring Homebrew is in PATH..."
 if [[ $(uname -m) == "arm64" ]]; then
     if ! grep -qs "brew shellenv" "$HOME/.zshrc"; then
-        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> "$HOME/.zshrc"
+        echo "eval \"\$(/opt/homebrew/bin/brew shellenv)\"" >> "$HOME/.zshrc"
         echo "✅ Added Homebrew to ~/.zshrc"
     fi
     eval "$(/opt/homebrew/bin/brew shellenv)"
@@ -51,14 +52,14 @@ fi
 
 echo "🐧 Installing Oh My Zsh..."
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    RUNZSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 fi
 
 echo "🚀 Installing spaceship zsh theme..."
 if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/spaceship-prompt" ]; then
     echo "Installing spaceship zsh theme..."
     git clone https://github.com/spaceship-prompt/spaceship-prompt.git "$HOME/.oh-my-zsh/custom/themes/spaceship-prompt" --depth=1
-    ln -s "$ZSH_CUSTOM/themes/spaceship-prompt/spaceship.zsh-theme" "$ZSH_CUSTOM/themes/spaceship.zsh-theme"
+    ln -s "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/spaceship-prompt/spaceship.zsh-theme" "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/spaceship.zsh-theme"
     echo "spaceship zsh theme installed."
 else
     echo "spaceship zsh theme is already installed."
@@ -69,7 +70,7 @@ echo "Setting up Zsh plugins..."
 # Install zsh-syntax-highlighting
 if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting" ]; then
     echo "Installing zsh-syntax-highlighting..."
-    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting"
     echo "zsh-syntax-highlighting installed."
 else
     echo "zsh-syntax-highlighting is already installed."
@@ -78,19 +79,19 @@ fi
 # Install zsh-autosuggestions
 if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]; then
     echo "Installing zsh-autosuggestions..."
-    git clone https://github.com/zsh-users/zsh-autosuggestions.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
+    git clone https://github.com/zsh-users/zsh-autosuggestions.git "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions"
     echo "zsh-autosuggestions installed."
 else
     echo "zsh-autosuggestions is already installed."
 fi
 
 # Update .zshrc file
-print_info "Updating .zshrc file..."
+echo "Updating .zshrc file..."
 
 # Backup existing .zshrc
 if [ -f "$HOME/.zshrc" ]; then
     cp "$HOME/.zshrc" "$HOME/.zshrc.backup.$(date +%Y%m%d%H%M%S)"
-    print_success "Backed up existing .zshrc file."
+    echo "✅ Backed up existing .zshrc file."
 fi
 
 if confirm "Do you want to use the recommended .zshrc configuration?"; then
@@ -166,9 +167,9 @@ SPACESHIP_RPROMPT_ORDER=(
 )
 EOL
 
-    print_success "Created new .zshrc with recommended configuration."
+    echo "✅ Created new .zshrc with recommended configuration."
 else
-    print_info "Skipping .zshrc modification. You can edit it manually later."
+    echo "Skipping .zshrc modification. You can edit it manually later."
 fi
 
 
