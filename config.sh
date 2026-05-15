@@ -41,12 +41,20 @@ brew update
 brew upgrade
 
 # 5. Install from Brewfile (if it exists)
+BREWFILE_URL="https://raw.githubusercontent.com/rocha-marcosm/macos-setup/v0.1/Brewfile"
+
 if [ -f "Brewfile" ]; then
-    echo "📦 Installing from Brewfile..."
+    echo "📦 Installing from local Brewfile..."
     brew bundle
 else
-    echo "📄 No Brewfile found."
+    echo "🌐 No local Brewfile found. Fetching from GitHub..."
+    curl -fsSL "$BREWFILE_URL" | brew bundle --file=-
 fi
+
+echo "🔧 Installing kubectl..."
+asdf plugin add kubectl https://github.com/asdf-community/asdf-kubectl.git
+asdf install kubectl latest
+asdf global kubectl latest
 
 # 6. installing and configuring oh my zsh
 

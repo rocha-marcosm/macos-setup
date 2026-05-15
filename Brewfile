@@ -2,6 +2,7 @@
 # General Utilities & CLI Tools
 # Essential command-line utilities for text processing, navigation, and editing
 # ==============================================================================
+brew "asdf"
 brew "bat"
 brew "direnv"
 brew "docutils"
