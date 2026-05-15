@@ -44,7 +44,6 @@ brew "git-remote-codecommit"
 brew "ansible"
 brew "ansible-lint"
 brew "infracost"
-brew "packer"
 brew "tenv"
 brew "terraform-docs"
 brew "terragrunt-atlantis-config"
@@ -54,7 +53,7 @@ brew "terragrunt-atlantis-config"
 # Tools for managing Kubernetes clusters and working with containers
 # ==============================================================================
 brew "argocd"
-brew "container"
+brew "container" if OS.mac?
 brew "helm"
 brew "k9s"
 brew "kubectx"
@@ -95,9 +94,9 @@ brew "unbound"
 # Casks
 # macOS native applications and fonts
 # ==============================================================================
-cask "font-meslo-lg-nerd-font"
-cask "font-fira-code-nerd-font"
-cask "joplin"
+cask "font-meslo-lg-nerd-font" if OS.mac?
+cask "font-fira-code-nerd-font" if OS.mac?
+cask "joplin" if OS.mac?
 
 # ==============================================================================
 # Krew Plugins
