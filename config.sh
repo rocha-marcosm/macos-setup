@@ -43,9 +43,10 @@ else
 fi
 
 echo "🔧 Installing kubectl..."
-asdf plugin add kubectl https://github.com/asdf-community/asdf-kubectl.git
+if ! asdf plugin list 2>/dev/null | grep -q "^kubectl$"; then
+    asdf plugin add kubectl https://github.com/asdf-community/asdf-kubectl.git
+fi
 asdf install kubectl latest
-asdf global kubectl latest
 
 # 5. installing and configuring oh my zsh
 
