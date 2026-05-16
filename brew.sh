@@ -8,7 +8,7 @@ brew update
 brew upgrade
 
 # 🍺 2. Install from Brewfile (if it exists)
-BREWFILE_URL="https://raw.githubusercontent.com/rocha-marcosm/macos-setup/v0.1/Brewfile"
+BREWFILE_URL="https://raw.githubusercontent.com/rocha-marcosm/macos-setup/main/Brewfile"
 
 if [ -f "Brewfile" ]; then
     echo "📦 Installing from local Brewfile..."

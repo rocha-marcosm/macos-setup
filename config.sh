@@ -26,7 +26,7 @@ if [[ -f "./brew.sh" ]]; then
     /bin/zsh ./brew.sh
 else
     echo "🌐 brew.sh not found locally. Fetching from remote..."
-    /bin/zsh -c "$(curl -fsSL "https://raw.githubusercontent.com/rocha-marcosm/macos-setup/v0.1/brew.sh")"
+    /bin/zsh -c "$(curl -fsSL "https://raw.githubusercontent.com/rocha-marcosm/macos-setup/main/brew.sh")"
 fi
 
 # 4. Installing and configuring oh my zsh
