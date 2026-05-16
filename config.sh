@@ -22,7 +22,12 @@ fi
 eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 # 3. 🍺 Brew packages 📦
-source ./brew.sh
+if [[ -f "./brew.sh" ]]; then
+    source ./brew.sh
+else
+    echo "🌐 brew.sh not found locally. Fetching from remote..."
+    source <(curl -fsSL "https://raw.githubusercontent.com/rocha-marcosm/macos-setup/v0.1/brew.sh")
+fi
 
 # 4. Installing and configuring oh my zsh
 
