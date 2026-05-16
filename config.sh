@@ -3,12 +3,7 @@
 set -eo pipefail
 trap 'echo "❌ Error on line $LINENO"' ERR
 
-# Ask for confirmation
-confirm() {
-    read -r "REPLY?$1 (y/n): "
-    echo
-    [[ $REPLY =~ ^[Yy]$ ]]
-}
+
 
 # 1. Install Homebrew (if not installed)
 if command -v brew &> /dev/null; then
@@ -94,7 +89,7 @@ if [ -f "$HOME/.zshrc" ]; then
     echo "✅ Backed up existing .zshrc file."
 fi
 
-if confirm "Do you want to use the recommended .zshrc configuration?"; then
+if ! grep -qs "ZSH_THEME" "$HOME/.zshrc"; then
     cat > "$HOME/.zshrc" << 'EOL'
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -139,7 +134,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 EOL
 
-    cat >> "$HOME/.spaceshiprc.zsh" << 'EOL'
+    cat > "$HOME/.spaceshiprc.zsh" << 'EOL'
 # Display time
 SPACESHIP_TIME_SHOW=true
 
@@ -169,7 +164,7 @@ EOL
 
     echo "✅ Created new .zshrc with recommended configuration."
 else
-    echo "Skipping .zshrc modification. You can edit it manually later."
+    echo "Skipping .zshrc modification because ZSH_THEME is already present."
 fi
 
 
