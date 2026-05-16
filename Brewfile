@@ -97,6 +97,7 @@ brew "unbound"
 cask "font-meslo-lg-nerd-font" if OS.mac?
 cask "font-fira-code-nerd-font" if OS.mac?
 cask "joplin" if OS.mac?
+cask "ghostty" if OS.mac?
 
 # ==============================================================================
 # Krew Plugins
