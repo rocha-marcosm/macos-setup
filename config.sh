@@ -24,7 +24,7 @@ eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 # 3. 🍺 Brew packages 📦
 source ./brew.sh
 
-# 5. installing and configuring oh my zsh
+# 4. Installing and configuring oh my zsh
 
 echo "🐧 Installing Oh My Zsh..."
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
