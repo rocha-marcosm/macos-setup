@@ -89,7 +89,7 @@ if [ -f "$HOME/.zshrc" ]; then
     echo "✅ Backed up existing .zshrc file."
 fi
 
-if ! grep -qs "ZSH_THEME" "$HOME/.zshrc"; then
+if ! grep -qs "spaceship" "$HOME/.zshrc"; then
     cat > "$HOME/.zshrc" << 'EOL'
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -121,7 +121,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 export LANG=en_US.UTF-8
-export EDITOR='vim'
+export EDITOR='nvim'
 
 # Aliases
 alias k=kubectl
