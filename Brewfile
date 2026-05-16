@@ -102,6 +102,7 @@ cask "joplin" if OS.mac?
 # Krew Plugins
 # Kubernetes CLI plugins managed by Krew
 # ==============================================================================
+brew "krew"
 krew "krew"
 krew "oidc-login"
 
