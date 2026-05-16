@@ -71,7 +71,7 @@ brew "opa"
 brew "pre-commit"
 brew "sops"
 brew "terrascan"
-brew "tflint"
+# brew "tflint" # Removed because of license
 brew "tfsec"
 brew "tfupdate"
 brew "trivy"
