@@ -10,23 +10,15 @@ confirm() {
     [[ $REPLY =~ ^[Yy]$ ]]
 }
 
-# 1. Install Xcode Command Line Tools
-if xcode-select -p &> /dev/null; then
-    echo "✅ Xcode command line tools already installed."
-else
-    echo "🔧 Installing Xcode command line tools..."
-    xcode-select --install
-fi
-
-# 2. Install Homebrew (if not installed)
+# 1. Install Homebrew (if not installed)
 if command -v brew &> /dev/null; then
     echo "✅ Homebrew already installed."
 else
     echo "🍺 Installing Homebrew..."
-   /bin/zsh -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
 
-# 3. Setup Shell Path for Apple Silicon
+# 2. Setup Shell Path for Apple Silicon
 echo "Ensuring Homebrew is in PATH..."
 if [[ $(uname -m) == "arm64" ]]; then
     if ! grep -qs "brew shellenv" "$HOME/.zshrc"; then
@@ -36,11 +28,11 @@ if [[ $(uname -m) == "arm64" ]]; then
     eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# 4. Update and Upgrade
+# 3. Update and Upgrade
 brew update
 brew upgrade
 
-# 5. Install from Brewfile (if it exists)
+# 4. Install from Brewfile (if it exists)
 BREWFILE_URL="https://raw.githubusercontent.com/rocha-marcosm/macos-setup/v0.1/Brewfile"
 
 if [ -f "Brewfile" ]; then
@@ -56,7 +48,7 @@ asdf plugin add kubectl https://github.com/asdf-community/asdf-kubectl.git
 asdf install kubectl latest
 asdf global kubectl latest
 
-# 6. installing and configuring oh my zsh
+# 5. installing and configuring oh my zsh
 
 echo "🐧 Installing Oh My Zsh..."
 if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
