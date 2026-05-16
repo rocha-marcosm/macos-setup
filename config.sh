@@ -20,13 +20,12 @@ fi
 
 # 2. Setup Shell Path for Apple Silicon
 echo "Ensuring Homebrew is in PATH..."
-if [[ $(uname -m) == "arm64" ]]; then
-    if ! grep -qs "brew shellenv" "$HOME/.zshrc"; then
-        echo "eval \"\$(/opt/homebrew/bin/brew shellenv)\"" >> "$HOME/.zshrc"
-        echo "✅ Added Homebrew to ~/.zshrc"
-    fi
-    eval "$(/opt/homebrew/bin/brew shellenv)"
+if ! grep -qs "brew shellenv" "$HOME/.zprofile"; then
+    echo >> "$HOME/.zprofile"
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> "$HOME/.zprofile"
+    echo "✅ Added Homebrew to ~/.zprofile"
 fi
+eval "$(/opt/homebrew/bin/brew shellenv zsh)"
 
 # 3. Update and Upgrade
 brew update
