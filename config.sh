@@ -3,6 +3,9 @@
 set -eo pipefail
 trap 'echo "❌ Error on line $LINENO"' ERR
 
+# TODO: create function for execute bash -c curl
+
+# TODO: create functions to optimze code and avoid repetitions
 
 # 1. Install Homebrew (if not installed)
 if command -v brew &> /dev/null; then
@@ -65,6 +68,11 @@ if [ ! -d "${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/plugins/zsh-autosuggestions" ]
 else
     echo "zsh-autosuggestions is already installed."
 fi
+
+# TODO: clone this repo for future updates
+
+# TODO: repleca inline file write with stow from clonned repo
+# - create new folder "dotfiles" to host these and future files
 
 # Update .zshrc file
 echo "Updating .zshrc file..."
